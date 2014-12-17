@@ -1,0 +1,454 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1C60EE7A19E508C5007A5A18 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C60EE7919E508C5007A5A18 /* main.m */; };
+		1C60EE7D19E508C6007A5A18 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C60EE7C19E508C6007A5A18 /* AppDelegate.m */; };
+		1C60EE8519E508C6007A5A18 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1C60EE8419E508C6007A5A18 /* Images.xcassets */; };
+		1C60EE8819E508C6007A5A18 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C60EE8619E508C6007A5A18 /* LaunchScreen.xib */; };
+		1C60EE9419E508C6007A5A18 /* PadComboTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C60EE9319E508C6007A5A18 /* PadComboTests.m */; };
+		1C60EEA019E50B81007A5A18 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1C60EE9E19E50B81007A5A18 /* ViewController.mm */; };
+		1C60EEA119E50B81007A5A18 /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C60EE9F19E50B81007A5A18 /* ViewController.xib */; };
+		1CA75A8D1A419C0B00AB7452 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CA75A8C1A419C0B00AB7452 /* opencv2.framework */; };
+		1CA75A901A419C2600AB7452 /* LargeImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CA75A8F1A419C2600AB7452 /* LargeImage.m */; };
+		1CC0682F1A41268900954CB1 /* balls.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CC0682E1A41268900954CB1 /* balls.png */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		1C60EE8E19E508C6007A5A18 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1C60EE6C19E508C5007A5A18 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1C60EE7319E508C5007A5A18;
+			remoteInfo = PadCombo;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		1C60EE7419E508C5007A5A18 /* PadCombo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PadCombo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1C60EE7819E508C5007A5A18 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1C60EE7919E508C5007A5A18 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		1C60EE7B19E508C5007A5A18 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		1C60EE7C19E508C6007A5A18 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		1C60EE8419E508C6007A5A18 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		1C60EE8719E508C6007A5A18 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		1C60EE8D19E508C6007A5A18 /* PadComboTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PadComboTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1C60EE9219E508C6007A5A18 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1C60EE9319E508C6007A5A18 /* PadComboTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PadComboTests.m; sourceTree = "<group>"; };
+		1C60EE9D19E50B81007A5A18 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		1C60EE9E19E50B81007A5A18 /* ViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewController.mm; sourceTree = "<group>"; };
+		1C60EE9F19E50B81007A5A18 /* ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ViewController.xib; sourceTree = "<group>"; };
+		1CA75A8C1A419C0B00AB7452 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = opencv2.framework; path = PadCombo/opencv2.framework; sourceTree = SOURCE_ROOT; };
+		1CA75A8E1A419C2600AB7452 /* LargeImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LargeImage.h; sourceTree = "<group>"; };
+		1CA75A8F1A419C2600AB7452 /* LargeImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LargeImage.m; sourceTree = "<group>"; };
+		1CC0682E1A41268900954CB1 /* balls.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = balls.png; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1C60EE7119E508C5007A5A18 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1CA75A8D1A419C0B00AB7452 /* opencv2.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1C60EE8A19E508C6007A5A18 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1C3786871A3FCDCB0000524D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1CA75A8C1A419C0B00AB7452 /* opencv2.framework */,
+			);
+			name = Frameworks;
+			path = opencv;
+			sourceTree = "<group>";
+		};
+		1C60EE6B19E508C5007A5A18 = {
+			isa = PBXGroup;
+			children = (
+				1C60EE7619E508C5007A5A18 /* PadCombo */,
+				1C60EE9019E508C6007A5A18 /* PadComboTests */,
+				1C3786871A3FCDCB0000524D /* Frameworks */,
+				1C60EE7519E508C5007A5A18 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		1C60EE7519E508C5007A5A18 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1C60EE7419E508C5007A5A18 /* PadCombo.app */,
+				1C60EE8D19E508C6007A5A18 /* PadComboTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		1C60EE7619E508C5007A5A18 /* PadCombo */ = {
+			isa = PBXGroup;
+			children = (
+				1CA75A8E1A419C2600AB7452 /* LargeImage.h */,
+				1CA75A8F1A419C2600AB7452 /* LargeImage.m */,
+				1C60EE7B19E508C5007A5A18 /* AppDelegate.h */,
+				1C60EE7C19E508C6007A5A18 /* AppDelegate.m */,
+				1C60EE8419E508C6007A5A18 /* Images.xcassets */,
+				1C60EE8619E508C6007A5A18 /* LaunchScreen.xib */,
+				1C60EE7719E508C5007A5A18 /* Supporting Files */,
+				1C60EE9D19E50B81007A5A18 /* ViewController.h */,
+				1C60EE9E19E50B81007A5A18 /* ViewController.mm */,
+				1C60EE9F19E50B81007A5A18 /* ViewController.xib */,
+			);
+			path = PadCombo;
+			sourceTree = "<group>";
+		};
+		1C60EE7719E508C5007A5A18 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				1CC0682E1A41268900954CB1 /* balls.png */,
+				1C60EE7819E508C5007A5A18 /* Info.plist */,
+				1C60EE7919E508C5007A5A18 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		1C60EE9019E508C6007A5A18 /* PadComboTests */ = {
+			isa = PBXGroup;
+			children = (
+				1C60EE9319E508C6007A5A18 /* PadComboTests.m */,
+				1C60EE9119E508C6007A5A18 /* Supporting Files */,
+			);
+			path = PadComboTests;
+			sourceTree = "<group>";
+		};
+		1C60EE9119E508C6007A5A18 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				1C60EE9219E508C6007A5A18 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1C60EE7319E508C5007A5A18 /* PadCombo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1C60EE9719E508C6007A5A18 /* Build configuration list for PBXNativeTarget "PadCombo" */;
+			buildPhases = (
+				1C60EE7019E508C5007A5A18 /* Sources */,
+				1C60EE7119E508C5007A5A18 /* Frameworks */,
+				1C60EE7219E508C5007A5A18 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PadCombo;
+			productName = PadCombo;
+			productReference = 1C60EE7419E508C5007A5A18 /* PadCombo.app */;
+			productType = "com.apple.product-type.application";
+		};
+		1C60EE8C19E508C6007A5A18 /* PadComboTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1C60EE9A19E508C6007A5A18 /* Build configuration list for PBXNativeTarget "PadComboTests" */;
+			buildPhases = (
+				1C60EE8919E508C6007A5A18 /* Sources */,
+				1C60EE8A19E508C6007A5A18 /* Frameworks */,
+				1C60EE8B19E508C6007A5A18 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1C60EE8F19E508C6007A5A18 /* PBXTargetDependency */,
+			);
+			name = PadComboTests;
+			productName = PadComboTests;
+			productReference = 1C60EE8D19E508C6007A5A18 /* PadComboTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		1C60EE6C19E508C5007A5A18 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0600;
+				ORGANIZATIONNAME = darklinden;
+				TargetAttributes = {
+					1C60EE7319E508C5007A5A18 = {
+						CreatedOnToolsVersion = 6.0.1;
+					};
+					1C60EE8C19E508C6007A5A18 = {
+						CreatedOnToolsVersion = 6.0.1;
+						TestTargetID = 1C60EE7319E508C5007A5A18;
+					};
+				};
+			};
+			buildConfigurationList = 1C60EE6F19E508C5007A5A18 /* Build configuration list for PBXProject "PadCombo" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 1C60EE6B19E508C5007A5A18;
+			productRefGroup = 1C60EE7519E508C5007A5A18 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1C60EE7319E508C5007A5A18 /* PadCombo */,
+				1C60EE8C19E508C6007A5A18 /* PadComboTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1C60EE7219E508C5007A5A18 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1C60EE8819E508C6007A5A18 /* LaunchScreen.xib in Resources */,
+				1C60EEA119E50B81007A5A18 /* ViewController.xib in Resources */,
+				1CC0682F1A41268900954CB1 /* balls.png in Resources */,
+				1C60EE8519E508C6007A5A18 /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1C60EE8B19E508C6007A5A18 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1C60EE7019E508C5007A5A18 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1C60EEA019E50B81007A5A18 /* ViewController.mm in Sources */,
+				1CA75A901A419C2600AB7452 /* LargeImage.m in Sources */,
+				1C60EE7D19E508C6007A5A18 /* AppDelegate.m in Sources */,
+				1C60EE7A19E508C5007A5A18 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1C60EE8919E508C6007A5A18 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1C60EE9419E508C6007A5A18 /* PadComboTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		1C60EE8F19E508C6007A5A18 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1C60EE7319E508C5007A5A18 /* PadCombo */;
+			targetProxy = 1C60EE8E19E508C6007A5A18 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		1C60EE8619E508C6007A5A18 /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1C60EE8719E508C6007A5A18 /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		1C60EE9519E508C6007A5A18 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		1C60EE9619E508C6007A5A18 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		1C60EE9819E508C6007A5A18 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/PadCombo",
+				);
+				INFOPLIST_FILE = PadCombo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		1C60EE9919E508C6007A5A18 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/PadCombo",
+				);
+				INFOPLIST_FILE = PadCombo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		1C60EE9B19E508C6007A5A18 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = PadComboTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PadCombo.app/PadCombo";
+			};
+			name = Debug;
+		};
+		1C60EE9C19E508C6007A5A18 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = PadComboTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PadCombo.app/PadCombo";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1C60EE6F19E508C5007A5A18 /* Build configuration list for PBXProject "PadCombo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1C60EE9519E508C6007A5A18 /* Debug */,
+				1C60EE9619E508C6007A5A18 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1C60EE9719E508C6007A5A18 /* Build configuration list for PBXNativeTarget "PadCombo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1C60EE9819E508C6007A5A18 /* Debug */,
+				1C60EE9919E508C6007A5A18 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1C60EE9A19E508C6007A5A18 /* Build configuration list for PBXNativeTarget "PadComboTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1C60EE9B19E508C6007A5A18 /* Debug */,
+				1C60EE9C19E508C6007A5A18 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 1C60EE6C19E508C5007A5A18 /* Project object */;
+}
