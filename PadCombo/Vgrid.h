@@ -23,5 +23,7 @@
 @property (nonatomic, copy) NSArray                 *route;
 
 + (id)grid;
+- (void)setup;
+- (void)refresh;
 
 @end

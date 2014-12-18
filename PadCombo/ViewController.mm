@@ -15,7 +15,7 @@
 #import "Vgrid.h"
 #import "V_loading.h"
 
-@interface ViewController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIWebViewDelegate, VgridDelegate>
+@interface ViewController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIWebViewDelegate, VgridDelegate, UIActionSheetDelegate>
 {
     cv::Mat balls;
 }
@@ -28,6 +28,7 @@
 @property (nonatomic, strong) NSString              *list;
 @property (nonatomic, strong) NSMutableDictionary   *content;
 @property (nonatomic, strong) NSMutableArray        *route;
+@property (nonatomic, assign) int64_t               actMove;
 
 //@property (strong, nonatomic) UIImage               *balls;
 
@@ -90,7 +91,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info;
     }
     
     //Method: \n 0: SQDIFF \n 1: SQDIFF NORMED \n 2: TM CCORR \n 3: TM CCORR NORMED \n 4: TM COEFF \n 5: TM COEFF NORMED
-    const int match_method = CV_TM_SQDIFF_NORMED;
+    const int match_method = CV_TM_CCOEFF;
     
     cv::Mat cell;
     UIImageToMat(img, cell);
@@ -120,40 +121,40 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info;
     
     /// 让我看看您的最终结果
     int x = matchLoc.x + 50;
-    NSLog(@"x: %d y: %d", matchLoc.x, matchLoc.y);
+//    NSLog(@"x: %d y: %d", matchLoc.x, matchLoc.y);
     
     int64_t ret = 0;
     
     if (x >= 0 && x < 100) {
-        NSLog(@"火");
+//        NSLog(@"火");
         ret = 1;
     }
     else if (x >= 100 && x < 200) {
-        NSLog(@"水");
+//        NSLog(@"水");
         ret = 3;
     }
     else if (x >= 200 && x < 300) {
-        NSLog(@"木");
+//        NSLog(@"木");
         ret = 2;
     }
     else if (x >= 300 && x < 400) {
-        NSLog(@"光");
+//        NSLog(@"光");
         ret = 4;
     }
     else if (x >= 400 && x < 500) {
-        NSLog(@"暗");
+//        NSLog(@"暗");
         ret = 5;
     }
     else if (x >= 500 && x < 600) {
-        NSLog(@"回");
+//        NSLog(@"回");
         ret = 6;
     }
     else if (x >= 600 && x < 700) {
-        NSLog(@"无");
+//        NSLog(@"无");
         ret = 7;
     }
     else if (x >= 700 && x < 900) {
-        NSLog(@"毒");
+//        NSLog(@"毒");
         ret = 8;
     }
     
@@ -173,8 +174,8 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info;
         for (int64_t x = 0; x < 6; x++) {
             for (int64_t y = 5; y > 0; y--) {
                 CGRect rect = CGRectMake(x * sw, h - (y * sw), sw, sw);
-                rect = CGRectInset(rect, floorf(sw * 0.2), floorf(sw * 0.2));
-                CGSize size = CGSizeMake(50, 50);
+                rect = CGRectInset(rect, floorf(sw * 0.1), floorf(sw * 0.1));
+                CGSize size = CGSizeMake(80, 80);
                 UIImage *ball = [LargeImage imageWithImage:img inRect:rect size:&size errMsg:nil];
 //                [LargeImage test_save_image:ball];
                 int64_t index = [self desideBall:ball];
@@ -189,38 +190,55 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info;
         
         _grid.content = dict;
         
-        [self performSelector:@selector(requestPath) withObject:nil afterDelay:0.01];
+//        [self performSelector:@selector(requestPath) withObject:nil afterDelay:0.01];
     }];
 }
 
 #pragma mark - path
 - (void)pBtn_action_clicked:(id)sender {
-    
-    _grid.route = _route;
-    
-//    [self requestPath];
-    
-//    NSString* json = @"{\"status\":\"ok\",\"x\":1,\"y\":3,\"route\":\"311413224142441422231\",\"combo\":[{\"type\":4,\"count\":3},{\"type\":4,\"count\":3},{\"type\":6,\"count\":3},{\"type\":6,\"count\":3},{\"type\":1,\"count\":3},{\"type\":3,\"count\":3},{\"type\":1,\"count\":3}],\"elapsed\":1073,\"quality\":4,\"move\":2}";
-//    
-//    NSError *error = nil;
-//    NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:[json dataUsingEncoding:NSUTF8StringEncoding]
-//                                                         options:NSJSONReadingAllowFragments
-//                                                           error:&error];
-//    
-//    if (error) {
-//        NSLog(@"%@", error);
-//    }
-//    else {
-//        NSLog(@"%@", dict);
-//        
-//        [self drawPath:dict];
-//    }
-//    
-//    [_pTf_auth resignFirstResponder];
-//
-//    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-//    picker.delegate = self;
-//    [self presentViewController:picker animated:YES completion:nil];
+    UIActionSheet* act = [[UIActionSheet alloc] initWithTitle:@"Action" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Request Path", @"Refresh Cells", @"Animate Path", nil];
+    act.tag = 1;
+    [act showInView:self.view];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSLog(@"%d", buttonIndex);
+    switch (actionSheet.tag) {
+        case 1:
+            switch (buttonIndex) {
+                case 0:
+                    //Request Path
+                    [self performSelector:@selector(actRequestPath) withObject:nil afterDelay:0.01];
+                    break;
+                case 1:
+                    //@"Refresh Cells"
+                    [_grid setup];
+                    break;
+                case 2:
+                    //Animate Path
+                    [_grid setRoute:_route];
+                    break;
+                default:
+                    break;
+            }
+            break;
+        case 2:
+            if (buttonIndex != 5) {
+                _actMove = buttonIndex;
+                [self requestPath:_actMove];
+            }
+            break;
+        default:
+            break;
+    }
+}
+
+- (void)actRequestPath
+{
+    UIActionSheet* act = [[UIActionSheet alloc] initWithTitle:@"Request Path Length" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Shortest", @"Short", @"Nomal", @"Long", @"Longest", nil];
+    act.tag = 2;
+    [act showInView:self.view];
 }
 
 - (NSDictionary*)syncRequest:(NSURL*)url error:(NSError **)error
@@ -247,9 +265,9 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info;
     return dict;
 }
 
-- (void)requestPath
+- (void)requestPath:(int64_t)move
 {
-    NSString *url = [NSString stringWithFormat:@"http://pad.forrep.com/api/resolve?field=%@&move=2", _list];
+    NSString *url = [NSString stringWithFormat:@"http://pad.forrep.com/api/resolve?field=%@&move=%lld", _list, move];
     [V_loading loadingInView:nil title:@"Request Path ..." message:nil loadingBlock:^{
         NSDictionary* dict = [self syncRequest:[NSURL URLWithString:url] error:nil];
         
@@ -378,7 +396,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info;
             NSLog(@"%@", dict);
             
             if ([[dict[@"status"] lowercaseString] isEqualToString:@"ok"]) {
-                [self requestPath];
+                [self requestPath:_actMove];
             }
             else {
                 [self performSelector:@selector(auth) withObject:nil afterDelay:0.01];

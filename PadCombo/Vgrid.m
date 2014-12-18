@@ -386,14 +386,13 @@ float frand()
 
 - (void)refresh
 {
-    for (NSInteger ix = 0; ix < Grid_x_count; ix++) {
-        for (NSInteger iy = 0; iy < Grid_y_count; iy++) {
-            NSString *key = keyFromPosition(ix, iy);
-            Vcell* cell = _dict_cell[key];
+    for (UIView* v in self.subviews) {
+        if ([v isKindOfClass:[Vcell class]]) {
+            Vcell* cell = (Vcell*)v;
             cell.backgroundColor = [UIColor clearColor];
-            cell.key = key;
-            cell.image = [self imgWithIndex:[_content[key] longLongValue]];
-            cell.frame = [_dict_frame[key] CGRectValue];
+            _dict_cell[cell.key] = cell;
+            cell.image = [self imgWithIndex:[_content[cell.key] longLongValue]];
+            cell.frame = [_dict_frame[cell.key] CGRectValue];
         }
     }
 }
