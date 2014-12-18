@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>78182663-FFCE-41E0-8012-BA4B7A0F28B4</string>
+	<key>IDESourceControlProjectName</key>
+	<string>PadCombo</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>E636DFC3EF3849E885BD3574AD442171BEFD74FF</key>
+		<string>https://github.com/darklinden/PadCombo.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>PadCombo.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>E636DFC3EF3849E885BD3574AD442171BEFD74FF</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/darklinden/PadCombo.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>E636DFC3EF3849E885BD3574AD442171BEFD74FF</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>E636DFC3EF3849E885BD3574AD442171BEFD74FF</string>
+			<key>IDESourceControlWCCName</key>
+			<string>PadCombo</string>
+		</dict>
+	</array>
+</dict>
+</plist>
