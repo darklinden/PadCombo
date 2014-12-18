@@ -27,6 +27,7 @@
 
 @property (nonatomic, strong) NSString              *list;
 @property (nonatomic, strong) NSMutableDictionary   *content;
+@property (nonatomic, strong) NSMutableArray        *route;
 
 //@property (strong, nonatomic) UIImage               *balls;
 
@@ -175,7 +176,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info;
                 rect = CGRectInset(rect, floorf(sw * 0.2), floorf(sw * 0.2));
                 CGSize size = CGSizeMake(50, 50);
                 UIImage *ball = [LargeImage imageWithImage:img inRect:rect size:&size errMsg:nil];
-                [LargeImage test_save_image:ball];
+//                [LargeImage test_save_image:ball];
                 int64_t index = [self desideBall:ball];
                 
                 dict[keyFromPosition(x, (5 - y))] = @(index);
@@ -195,7 +196,9 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info;
 #pragma mark - path
 - (void)pBtn_action_clicked:(id)sender {
     
-    [self requestPath];
+    _grid.route = _route;
+    
+//    [self requestPath];
     
 //    NSString* json = @"{\"status\":\"ok\",\"x\":1,\"y\":3,\"route\":\"311413224142441422231\",\"combo\":[{\"type\":4,\"count\":3},{\"type\":4,\"count\":3},{\"type\":6,\"count\":3},{\"type\":6,\"count\":3},{\"type\":1,\"count\":3},{\"type\":3,\"count\":3},{\"type\":1,\"count\":3}],\"elapsed\":1073,\"quality\":4,\"move\":2}";
 //    
@@ -261,8 +264,12 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info;
 
 - (void)drawPath:(NSDictionary* )route
 {
+    NSMutableArray *array = [NSMutableArray array];
+    
     int64_t x = [route[@"x"] longLongValue];
     int64_t y = [route[@"y"] longLongValue];
+    
+    [array addObject:[NSValue valueWithCGPoint:CGPointMake(x, y)]];
     
     int64_t lastOperation;
     
@@ -284,7 +291,11 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info;
                 break;
         }
         NSLog(@"x: %lld y: %lld", x, y);
+        
+        [array addObject:[NSValue valueWithCGPoint:CGPointMake(x, y)]];
     }
+    
+    _route = array;
 }
 
 - (void)auth

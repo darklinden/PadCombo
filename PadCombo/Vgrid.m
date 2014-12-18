@@ -8,12 +8,72 @@
 
 #import "Vgrid.h"
 #import "LargeImage.h"
+#import <CoreGraphics/CoreGraphics.h>
 
 #define Grid_Distance   0.f
 #define Grid_x_count    6
 #define Grid_y_count    5
 
 #define Cell_Offset     20
+
+@interface DrawView : UIView
+@property (nonatomic, copy) NSArray *route;
+
++ (instancetype)viewWithFrame:(CGRect)frame Route:(NSArray *)route;
+
+@end
+
+@implementation DrawView
+
++ (instancetype)viewWithFrame:(CGRect)frame Route:(NSArray *)route
+{
+    DrawView* v = [[DrawView alloc] initWithFrame:frame];
+    v.backgroundColor = [UIColor clearColor];
+    v.route = route;
+    return v;
+}
+
+- (void)drawRect:(CGRect)rect
+{
+    if (_route.count < 2) {
+        return;
+    }
+    
+    CGContextRef contxt = UIGraphicsGetCurrentContext();
+    CGContextSetLineWidth(contxt, 3);
+    CGContextSetStrokeColorWithColor(contxt, [UIColor blackColor].CGColor);
+    
+    for (int i = 0; i < _route.count - 1; i++) {
+        CGPoint start = [_route[i] CGPointValue];
+        CGPoint end = [_route[i + 1] CGPointValue];
+        CGContextMoveToPoint(contxt, start.x, start.y);
+        CGContextAddLineToPoint(contxt, end.x, end.y);
+    }
+    
+    CGContextStrokePath(contxt);
+    
+    //draw arrow
+    CGPoint start = [_route[_route.count - 2] CGPointValue];
+    CGPoint end = [_route[_route.count - 1] CGPointValue];
+    
+    if (start.x == end.x) {
+        CGContextMoveToPoint(contxt, end.x, end.y);
+        CGContextAddLineToPoint(contxt, end.x + 10, end.y > start.y ? end.y - 10 : end.y + 10);
+        
+        CGContextMoveToPoint(contxt, end.x, end.y);
+        CGContextAddLineToPoint(contxt, end.x - 10, end.y > start.y ? end.y - 10 : end.y + 10);
+    }
+    else {
+        CGContextMoveToPoint(contxt, end.x, end.y);
+        CGContextAddLineToPoint(contxt, end.x > start.x ? end.x - 10 : end.x + 10, end.y + 10);
+        
+        CGContextMoveToPoint(contxt, end.x, end.y);
+        CGContextAddLineToPoint(contxt, end.x > start.x ? end.x - 10 : end.x + 10, end.y - 10);
+    }
+    CGContextStrokePath(contxt);
+}
+
+@end
 
 @interface Vcell : UIImageView
 @property (nonatomic, strong) NSString  *key;
@@ -29,6 +89,8 @@
     Vcell* cell = [[Vcell alloc] initWithFrame:frame];
     cell.contentMode = UIViewContentModeScaleAspectFill;
     cell.backgroundColor = [UIColor clearColor];
+    cell.layer.masksToBounds = YES;
+    cell.layer.cornerRadius = frame.size.width * 0.2;
     return cell;
 }
 
@@ -49,6 +111,10 @@
 @property (nonatomic, strong) UIImage               *img_heal;
 @property (nonatomic, strong) UIImage               *img_invalid;
 @property (nonatomic, strong) UIImage               *img_poison;
+
+@property (nonatomic, assign) int64_t               index;
+
+@property (nonatomic, strong) DrawView              *drawView;
 
 @end
 
@@ -144,7 +210,7 @@
             break;
         default:
             NSLog(@"index %lld not allowed", index);
-//            NSAssert(0, @"");
+            NSAssert(0, @"");
             break;
     }
     
@@ -153,9 +219,16 @@
 
 - (void)setContent:(NSDictionary *)content
 {
-    _content = content;
+    _content = [content copy];
     NSLog(@"%@", content);
     [self setup];
+}
+
+- (void)setRoute:(NSArray *)route
+{
+    _route = [route copy];
+    
+    [self route_animate];
 }
 
 - (void)setup
@@ -165,17 +238,14 @@
     }
     
     CGSize size = CGSizeMake(floorf(self.frame.size.width / Grid_x_count), floorf(self.frame.size.width / Grid_x_count));
-    CGFloat distance = Grid_Distance;
-    CGFloat x_cnt = Grid_x_count;
-    CGFloat y_cnt = Grid_y_count;
     
     self.dict_cell = [NSMutableDictionary dictionary];
     self.dict_frame = [NSMutableDictionary dictionary];
     
-    for (NSInteger ix = 0; ix < x_cnt; ix++) {
-        for (NSInteger iy = 0; iy < y_cnt; iy++) {
-            CGFloat x = ix * (size.width + distance) + distance;
-            CGFloat y = iy * (size.height + distance) + distance;
+    for (NSInteger ix = 0; ix < Grid_x_count; ix++) {
+        for (NSInteger iy = 0; iy < Grid_y_count; iy++) {
+            CGFloat x = ix * (size.width + Grid_Distance) + Grid_Distance;
+            CGFloat y = iy * (size.height + Grid_Distance) + Grid_Distance;
             CGRect rect = CGRectMake(x, y, size.width, size.height);
             
             Vcell *cell = [Vcell cellWithFrame:rect];
@@ -191,13 +261,141 @@
     }
 }
 
-- (void)refresh_all
+- (void)route_animate
 {
-    for (UIView *v in self.subviews) {
-        [v removeFromSuperview];
+    _index = 0;
+    [self refresh];
+    [self draw_path];
+    [self route_one_by_one];
+}
+
+float frand()
+{
+    return ((float)rand() - ((float)RAND_MAX) * 0.5) / (float)RAND_MAX;
+}
+
+- (void)draw_path
+{
+    //bring
+    CGPoint cp = [_route[_index] CGPointValue];
+    Vcell* current = _dict_cell[keyFromPosition(cp.x, cp.y)];
+    current.backgroundColor = [UIColor redColor];
+    [self bringSubviewToFront:current];
+    
+    if (self.drawView) {
+        [_drawView removeFromSuperview];
+        self.drawView = nil;
     }
     
-    [self setup];
+    NSMutableArray* array = [NSMutableArray array];
+    for (int i = 0; i < _route.count; i++) {
+        if (i == 0) {
+            CGPoint p = [_route[i] CGPointValue];
+            
+            CGRect r = [_dict_frame[keyFromPosition(p.x, p.y)] CGRectValue];
+            
+            CGPoint rp = CGPointMake(r.origin.x + (r.size.width * 0.5),
+                                     r.origin.y + (r.size.height * 0.5));
+            
+            [array addObject:[NSValue valueWithCGPoint:rp]];
+        }
+        else {
+            CGPoint lp = [_route[i - 1] CGPointValue];
+            CGPoint p = [_route[i] CGPointValue];
+            CGRect r = [_dict_frame[keyFromPosition(p.x, p.y)] CGRectValue];
+            
+            if (lp.x == p.x) {
+                CGPoint rp = CGPointMake([array[i - 1] CGPointValue].x,
+                                         r.origin.y + (r.size.height * 0.5) + (frand() * r.size.height * 0.8));
+                [array addObject:[NSValue valueWithCGPoint:rp]];
+            }
+            else {
+                CGPoint rp = CGPointMake(r.origin.x + (r.size.width * 0.5) + (frand() * r.size.width * 0.8),
+                                         [array[i - 1] CGPointValue].y);
+                [array addObject:[NSValue valueWithCGPoint:rp]];
+            }
+        }
+    }
+    
+    _drawView = [DrawView viewWithFrame:self.bounds Route:array];
+    
+    [self addSubview:_drawView];
+}
+
+- (void)route_one_by_one
+{
+    if (_index < _route.count - 1) {
+        CGPoint cp = [_route[_index] CGPointValue];
+        CGPoint np = [_route[_index + 1] CGPointValue];
+        
+        Vcell* current = _dict_cell[keyFromPosition(cp.x, cp.y)];
+        Vcell* next = _dict_cell[keyFromPosition(np.x, np.y)];
+        
+        CGRect cr = [_dict_frame[keyFromPosition(cp.x, cp.y)] CGRectValue];
+        CGRect nr = [_dict_frame[keyFromPosition(np.x, np.y)] CGRectValue];
+        
+        if (_index == 0) {
+            [UIView animateWithDuration:0.5 animations:^{
+                current.alpha = 0;
+            } completion:^(BOOL finished) {
+                [UIView animateWithDuration:0.5 animations:^{
+                    current.alpha = 1;
+                } completion:^(BOOL finished) {
+                    [UIView animateWithDuration:0.5 animations:^{
+                        current.alpha = 0;
+                    } completion:^(BOOL finished) {
+                        [UIView animateWithDuration:0.5 animations:^{
+                            current.alpha = 1;
+                        } completion:^(BOOL finished) {
+                            [UIView animateWithDuration:0.5 animations:^{
+                                current.frame = nr;
+                                next.frame = cr;
+                            } completion:^(BOOL finished) {
+                                next.key = keyFromPosition(cp.x, cp.y);
+                                _dict_cell[keyFromPosition(cp.x, cp.y)] = next;
+                                current.key = keyFromPosition(np.x, np.y);
+                                _dict_cell[keyFromPosition(np.x, np.y)] = current;
+                                
+                                _index++;
+                                [self performSelector:@selector(route_one_by_one) withObject:nil afterDelay:0.01];
+                            }];
+                        }];
+                    }];
+                }];
+            }];
+        }
+        else {
+            [UIView animateWithDuration:0.5 animations:^{
+                current.frame = nr;
+                next.frame = cr;
+            } completion:^(BOOL finished) {
+                next.key = keyFromPosition(cp.x, cp.y);
+                _dict_cell[keyFromPosition(cp.x, cp.y)] = next;
+                current.key = keyFromPosition(np.x, np.y);
+                _dict_cell[keyFromPosition(np.x, np.y)] = current;
+                
+                _index++;
+                [self performSelector:@selector(route_one_by_one) withObject:nil afterDelay:0.01];
+            }];
+        }
+    }
+    else {
+        
+    }
+}
+
+- (void)refresh
+{
+    for (NSInteger ix = 0; ix < Grid_x_count; ix++) {
+        for (NSInteger iy = 0; iy < Grid_y_count; iy++) {
+            NSString *key = keyFromPosition(ix, iy);
+            Vcell* cell = _dict_cell[key];
+            cell.backgroundColor = [UIColor clearColor];
+            cell.key = key;
+            cell.image = [self imgWithIndex:[_content[key] longLongValue]];
+            cell.frame = [_dict_frame[key] CGRectValue];
+        }
+    }
 }
 
 - (Vcell *)viewFromTouchPoint:(CGPoint)p
@@ -233,28 +431,28 @@
 
 - (void)putDownCurrentCell
 {
-    [_cell_pickup removeFromSuperview];
-    _cell_current.alpha = 1.f;
-    
-    _cell_pickup = nil;
-    _cell_current = nil;
+//    [_cell_pickup removeFromSuperview];
+//    _cell_current.alpha = 1.f;
+//    
+//    _cell_pickup = nil;
+//    _cell_current = nil;
 }
 
 - (void)pickUpCurrentCellWithPoint:(CGPoint)p
 {
-    if (_cell_pickup) {
-        [_cell_pickup removeFromSuperview];
-        _cell_pickup = nil;
-    }
-    
-    _cell_current.alpha = 0.5f;
-    
-    _cell_pickup = [_cell_current copy];
-    [self addSubview:_cell_pickup];
-    
-    [_cell_pickup setAlpha:0.7];
-    _cell_pickup.transform = CGAffineTransformMakeScale(1.2, 1.2);
-    _cell_pickup.center = CGPointMake(p.x - Cell_Offset, p.y - Cell_Offset);
+//    if (_cell_pickup) {
+//        [_cell_pickup removeFromSuperview];
+//        _cell_pickup = nil;
+//    }
+//    
+//    _cell_current.alpha = 0.5f;
+//    
+//    _cell_pickup = [_cell_current copy];
+//    [self addSubview:_cell_pickup];
+//    
+//    [_cell_pickup setAlpha:0.7];
+//    _cell_pickup.transform = CGAffineTransformMakeScale(1.2, 1.2);
+//    _cell_pickup.center = CGPointMake(p.x - Cell_Offset, p.y - Cell_Offset);
 }
 
 - (void)moveCurrentCellToPoint:(CGPoint)p
@@ -383,44 +581,44 @@
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    if (!_cell_pickup || !_cell_current) {
-        return;
-    }
-    
-    if (touches.count != 1) {
-        return;
-    }
-    
-    UITouch *t = [touches anyObject];
-    CGPoint p = [t locationInView:self];
-    
-    [self moveCurrentCellToPoint:p];
+//    if (!_cell_pickup || !_cell_current) {
+//        return;
+//    }
+//    
+//    if (touches.count != 1) {
+//        return;
+//    }
+//    
+//    UITouch *t = [touches anyObject];
+//    CGPoint p = [t locationInView:self];
+//    
+//    [self moveCurrentCellToPoint:p];
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    if (touches.count != 1) {
-        if (_cell_pickup || _cell_current) {
-            [self putDownCurrentCell];
-            return;
-        }
-        return;
-    }
-    
-    UITouch *t = [touches anyObject];
-    CGPoint p = [t locationInView:self];
-    
-    if (_cell_pickup || _cell_current) {
-        [self moveCurrentCellToPoint:p];
-        [self putDownCurrentCell];
-    }
-    
-    [self performSelector:@selector(refresh_eaten_cell) withObject:nil afterDelay:0.01];
+//    if (touches.count != 1) {
+//        if (_cell_pickup || _cell_current) {
+//            [self putDownCurrentCell];
+//            return;
+//        }
+//        return;
+//    }
+//    
+//    UITouch *t = [touches anyObject];
+//    CGPoint p = [t locationInView:self];
+//    
+//    if (_cell_pickup || _cell_current) {
+//        [self moveCurrentCellToPoint:p];
+//        [self putDownCurrentCell];
+//    }
+//    
+//    [self performSelector:@selector(refresh_eaten_cell) withObject:nil afterDelay:0.01];
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    [self touchesEnded:touches withEvent:event];
+//    [self touchesEnded:touches withEvent:event];
 }
 
 - (void)refresh_eaten_cell
